@@ -87,8 +87,6 @@ func answerPost(responseWriter http.ResponseWriter, request *http.Request, reque
 		fmt.Fprint(responseWriter, "false")
 		return
 	}
-	fmt.Println(net.ParseIP(ip))
-	return
 	error = ioutil.WriteFile(whitelistFile, []byte(net.ParseIP(ip)), 0000)
 	if error != nil {
 		fmt.Fprint(responseWriter, "false")
