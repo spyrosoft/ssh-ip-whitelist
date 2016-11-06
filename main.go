@@ -6,7 +6,6 @@ import (
 	"strings"
 	"path"
 	"io/ioutil"
-	"net"
 	"net/http"
 	"github.com/julienschmidt/httprouter"
 )
@@ -81,13 +80,8 @@ func answerPost(responseWriter http.ResponseWriter, request *http.Request, reque
 		fmt.Fprint(responseWriter, "false")
 		return
 	}
-	
-	ip, _, error := net.SplitHostPort(request.RemoteAddr)
-	if error != nil {
-		fmt.Fprint(responseWriter, "false")
-		return
-	}
-	error = ioutil.WriteFile(whitelistFile, []byte(net.ParseIP(ip)), 0000)
+	ipAddresses := strings.Split(request.Header.Get("x-forwarded-for"), ", ")
+	error := ioutil.WriteFile(whitelistFile, []byte(ipAddresses[0]), 0000)
 	if error != nil {
 		fmt.Fprint(responseWriter, "false")
 		return
