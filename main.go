@@ -17,7 +17,7 @@ type StaticHandler struct {
 var (
 	answer = ""
 	webRoot = "web-root"
-	whitelistFile = "private/whitelist"
+	whitelistFile = "tmp/whitelist"
 )
 
 func (sh *StaticHandler) ServeHttp(responseWriter http.ResponseWriter, request *http.Request) {
