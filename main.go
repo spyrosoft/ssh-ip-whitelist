@@ -24,6 +24,12 @@ func main() {
 	log.Fatal(http.ListenAndServe(":8090", router))
 }
 
+func loadAnswer() {
+	loadedAnswer, error := ioutil.ReadFile("private/answer.txt")
+	panicOnError(error)
+	answer = string(loadedAnswer)
+}
+
 func answerPost(responseWriter http.ResponseWriter, request *http.Request, requestParameters httprouter.Params) {
 	if answer == "" || answer != request.PostFormValue("answer") {
 		fmt.Fprint(responseWriter, "false")
